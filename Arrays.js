@@ -45,12 +45,14 @@ console.log("ARRAY EXERCISE II");
 var shoppingCart = ["Milk","Coffee","Tea","Honey"]
 
 shoppingCart.unshift("Meat");
+console.log("meat added at begining",shoppingCart)
 shoppingCart.push("sugar")
+console.log("sugar added at last",shoppingCart)
 console.log(shoppingCart)
 shoppingCart.splice(4,1)
-console.log(shoppingCart);
+console.log("honey removed",shoppingCart);
 shoppingCart[3]="Green Tea"
-console.log(shoppingCart)
+console.log("tea to green tea updated",shoppingCart)
  var countries = ["UK","pakistan","england","bangladesh"]
  console.log(countries)
  if(countries.includes("india")){
@@ -65,16 +67,7 @@ console.log(shoppingCart)
  var fullstack = frontend+backend;
  console.log(fullstack)
  console.log("ARRAY EXERCISE III")
-//  var ages =[19,22,19,24,20,25,26,24,25,24]
-//  sort = ages.sort
-//  var min = ages.min()
-//  var max = ages.max()
-//  var median =ages.middleItem()
-//  console.log(ages)
-//  console.log(sort)
-//  console.log(min)
-//  console.log(max)
-//  console.log(median)
+
 var ages = [19, 22, 19, 24, 20, 25, 26, 24, 25, 24];
 
 // Sort the array
@@ -119,7 +112,26 @@ console.log("Average Age: " + averageAge);
 console.log("Range of Ages: " + range);
 console.log("Absolute Difference (min - average): " + minAverageDiff);
 console.log("Absolute Difference (max - average): " + maxAverageDiff);
+const array = ["Fatima", "Sha", "ASDC", "Shaista", "HTML"];
+const filteredArray = array.filter(element => element.length > 3);
+console.log(array)
 
+console.log(filteredArray); // This will contain ["apple", "banana", "cherry"]
+
+
+// Sample array
+var fruits = ["apple", "banana", "cherry", "date"];
+
+// Element to remove
+var elementToRemove = "banana";
+
+// Using the Array.prototype.filter() method
+var filteredFruits = fruits.filter(function(fruit) {
+  return fruit !== elementToRemove;
+});
+console.log(fruits)
+
+console.log(filteredFruits); // ["apple", "cherry", "date"]
 
 
 
