@@ -1,18 +1,95 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dom.js"></script>
+</head>
 <body>
-	<ul id="myList"></ul>
-	<script>
-		let data = [1, 2, 3, 4];
-		let list = document.getElementById("myList");
-		for (i = 0; i < data.length; ++i) {
-			let li = document.createElement('li');
-			li.innerText = data[i];
-			list.appendChild(li);
-		}
-	</script>
-</body>
+<!-- Create an index.html file and put four p elements
+as above: Get the first paragraph by using
+document.querySelector(tagname) and tag name -->
+<h1>DOM MANIPULATION EXCERCISE</h1>
+<p id="pr1">para1</p>
+<p id="pr2">para2</p>
+<p id="pr3">para3</p>
+<p id="pr4"></p>
+<script>
+    let para = document.querySelector("p");
+    console.log(para);
+    let paratag = document.getElementsByTagName("p")
+    console.log(paratag);
+// Get each of the the paragraph using
+// document.querySelector('#id') and by their id
+let para1 = document.querySelector('#pr1');
+console.log(para1);
+para1id = document.getElementById("pr1")
+para2id = document.getElementById("pr2")
+para3id = document.getElementById("pr3")
+para4id = document.getElementById("pr4")
+let para2 = document.querySelector('#pr2');
+console.log(para2);
+let para3 = document.querySelector('#pr3');
+console.log(para3);
+let para4 = document.querySelector('#pr4');
+console.log(para4);
+// Get all the p as nodeList using
+// document.querySelectorAll(tagname) and by their
+// tag name
+let allpr = document.querySelectorAll('p');
+console.log(allpr);
+// Set a text content to paragraph the fourth
+// paragraph,Fourth Paragraph
+let pr4textcontent = "<h5>Fourth Paragraph</h5>";
+// para4id.innerHTML = <h1>forth para</h1>;
+console.log(para4id);
+para4id.innerHTML = pr4textcontent
+// Set id and class attribute for all the paragraphs
+// using different attribute setting methods
+let setIdForPara1 = para1id.setAttribute("class", "newclass");
+//using classList  setting attribute
+let addClassToPr2 = para2id.classList.add("anotherclass");
+//using .id  setting attribute
+let setIDtoPr3 = para3id.id = "third";
+// setting class to all p tags
+let allPtags = document.querySelectorAll("p");
+for (let i=0;i<allPtags.length;i++){
+    allPtags[i].className += ' newclass';
+    }
+// Change stye of paragraph1 using
+// JavaScript(eg. color, background, border, fontsize, font-family)
+let changeStyleOfPara1 = para1id.style.color = "red" ;
+let changeBackgroundColorOfPara1 = para2id.style.backgroundColor = "#f5f5dc";
+let changeBorderOfPara1 = para3id.style.border = "solid black";
+let changeFontSizeOfPara1 = para4id.style.fontSize = "2em";
+let changeFontFamilyOfPara1 = para1id.style.fontFamily = "Arial, sans-serif";
+// Target the h1 element and change the color  of h1 for
+// every 2 secs
+setInterval(() => {
+    let h1Tag = document.querySelector("h1");
+    if (!h1Tag.hasAttribute("data-changed")){
+        h1Tag.style.color = "blue";
+        h1Tag.setAttribute("data-changed","true");
+        } else {
+            h1Tag.removeAttribute("data-changed");
+            h1Tag.style.color = "red";
+            }
+            }, 2000);
 
+        
+
+
+
+
+
+
+
+
+
+</script>
+
+
+    
+</body>
 </html>
