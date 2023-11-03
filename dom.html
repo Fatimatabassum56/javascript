@@ -15,6 +15,7 @@ document.querySelector(tagname) and tag name -->
 <p id="pr2">para2</p>
 <p id="pr3">para3</p>
 <p id="pr4"></p>
+<p></p>
 <script>
     let para = document.querySelector("p");
     console.log(para);
@@ -41,7 +42,7 @@ let allpr = document.querySelectorAll('p');
 console.log(allpr);
 // Set a text content to paragraph the fourth
 // paragraph,Fourth Paragraph
-let pr4textcontent = "<h5>Fourth Paragraph</h5>";
+let pr4textcontent = "<h5>Fatima</h5>";
 // para4id.innerHTML = <h1>forth para</h1>;
 console.log(para4id);
 para4id.innerHTML = pr4textcontent
@@ -66,16 +67,30 @@ let changeFontSizeOfPara1 = para4id.style.fontSize = "2em";
 let changeFontFamilyOfPara1 = para1id.style.fontFamily = "Arial, sans-serif";
 // Target the h1 element and change the color  of h1 for
 // every 2 secs
-setInterval(() => {
+// let flag = 1;
+// setInterval(() => {
+//     let h1Tag = document.querySelector("h1");
+//     if (flag){
+//         h1Tag.style.color = "blue";
+//         flag = 0;
+//         } else {
+//             h1Tag.style.color = "red";
+//             flag = 1
+//             }
+//             }, 2000);
+//  Target the h1 element and change the color by storing the array of colors  of h1 for
+// every 2 secs
+let colorsArray = ["yellow","green","purple","red"];
+let i = 0;
+setInterval(()=>{
     let h1Tag = document.querySelector("h1");
-    if (!h1Tag.hasAttribute("data-changed")){
-        h1Tag.style.color = "blue";
-        h1Tag.setAttribute("data-changed","true");
-        } else {
-            h1Tag.removeAttribute("data-changed");
-            h1Tag.style.color = "red";
-            }
-            }, 2000);
+    h1Tag.style.color = colorsArray[i];
+    i++;
+    if(i >= colorsArray.length){
+        i = 0;
+        }},2000);
+
+
 
         
 
