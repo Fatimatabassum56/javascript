@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(39, 39, 51);
+            color: white;
+         
+        }
+
+        #app {
+            max-width: 500px;
+            margin:  auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 8px;
+            border: 1px solid #ddd;
+            margin: 10px ;
+        }
+
+        .completed {
+            text-decoration: line-through;
+        }
+
+        button {
+            background-color: rgb(75, 75, 221);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 32px;
+            height: 40px;
+            width: auto;
+            font-size: 18px;
+            margin-left: 10px;
+        }
+
+        input{
+            outline: none;
+            border: none;
+            border-bottom: 2px solid rgb(57, 57, 71);
+            height: 40px;
+            width: 200px;
+            font-size: 20px;
+          border-radius: 32px;
+          text-align: center;
+        
+
+            
+        }
+        #task{
+            margin-right: 10px;
+        }
+
+        .delete{
+            background-color: red;
+
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>To-Do List</h1>
+        <input type="text" id="task" placeholder="Add a new task">
+        <input type="text" id="description" placeholder="Add a description">
+        <button id="addTask">Add</button>
+        <ul id="taskList"><h3>List Of Tasks</h3></ul>
+    </div>
+
+    <script>
+        const taskList = document.getElementById("taskList");
+        const addTaskButton = document.getElementById("addTask");
+        const taskInput = document.getElementById("task");
+        const descriptionInput = document.getElementById("description");
+        const tasks = [];
+
+        addTaskButton.addEventListener("click", addTask);
+
+        function addTask() {
+            const taskText = taskInput.value;
+            const descriptionText = descriptionInput.value;
+
+            if (taskText.trim() === "") {
+                alert("Task description cannot be empty.");
+                return;
+            }
+
+            const taskItem = document.createElement("li");
+            taskItem.innerHTML = `
+                <span>${taskText}</span>
+                <span>${descriptionText}</span>
+                <button class="edit">Edit</button>
+                <button class="delete">Delete</button>
+                <input type="checkbox" class="checkbox">
+                
+                
+            `;
+
+            taskList.appendChild(taskItem);
+            taskInput.value = "";
+            descriptionInput.value = "";
+
+            const editButton = taskItem.querySelector(".edit");
+            const deleteButton = taskItem.querySelector(".delete");
+            const checkBox = taskItem.querySelector(".checkbox");
+
+            editButton.addEventListener("click", () => editTask(taskItem, taskText,descriptionText));
+            deleteButton.addEventListener("click", () => deleteTask(taskItem));
+            checkBox.addEventListener("change", () => toggleTaskCompletion(taskItem, checkBox));
+
+            // Save the task to local storage
+            const taskObject = { taskText, taskItem, descriptionText };
+            tasks.push(taskObject);
+            saveTasksToLocalStorage();
+        }
+
+        function editTask(taskItem, taskText, descriptionText) {
+            const newText = prompt("Edit task:", taskText);
+
+            if (newText !== null) {
+                taskItem.querySelector("span").textContent = newText;
+
+                // Update the task in the array
+                const taskObject = tasks.find(task => task.taskItem === taskItem);
+                if (taskObject) {
+                    taskObject.taskText = newText;
+                    saveTasksToLocalStorage();
+                }
+            }
+        }
+
+        function deleteTask(taskItem) {
+            taskList.removeChild(taskItem);
+
+            // Remove the task from the array
+            const index = tasks.findIndex(task => task.taskItem === taskItem);
+            if (index !== -1) {
+                tasks.splice(index, 1);
+                saveTasksToLocalStorage();
+            }
+        }
+
+        function toggleTaskCompletion(taskItem, checkBox) {
+            taskItem.classList.toggle("completed", checkBox.checked);
+
+            // Update the task in the array
+            const taskObject = tasks.find(task => task.taskItem === taskItem);
+            if (taskObject) {
+                saveTasksToLocalStorage();
+            }
+        }
+
+        function saveTasksToLocalStorage() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+       
+    </script>
+</body>
+</html>
