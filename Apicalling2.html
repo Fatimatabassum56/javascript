@@ -6,6 +6,19 @@
     <title>Document</title>
 </head>
 <body>
+    <table border="1px">
+        <thead>
+        <tr><th>Name</th>
+        <th>capital</th>
+        <th>languages</th>
+        <th>population</th>
+    </tr>
+</thead>
+        <tbody id="tbody">
+
+        </tbody>
+        
+    </table>
     <script>
     function apiCall(url) {
     let xhr = new XMLHttpRequest()
@@ -33,12 +46,12 @@
 }
 
 //  apiCall('https://dummyjson.com/carts/1')
-//    .then((data1) => { 
+//    <tr>.then((data1) => { 
 //    let api1=data1.total
 //    console.log(api1);
 // })
 // apiCall('https://dummyjson.com/carts/2')
-//    .then((data2) => {  
+//    <tr>.then((data2) => {  
 //     let api2 = data2.total
 //     console.log(api2);
     
@@ -47,13 +60,13 @@
 
 
 
-//Now make sequential API calls. Use the
-//response of the first promise and return the
-//total amount to the next.
+//Now make sequential API calls. Use<tr> the
+//response of<tr> the first promise and return<tr> the
+//total amount to<tr> the next.
 let totalAmount;
 Promise.all([apiCall('https://dummyjson.com/carts/1'), apiCall('https://dummyjson.com/carts/2')])
 
-.then(([data1, data2])=>{
+    .then(([data1, data2])=>{
     console.log(data1);
     console.log(data2);
     console.log("total amount of cart1",data1.total);
@@ -62,6 +75,32 @@ Promise.all([apiCall('https://dummyjson.com/carts/1'), apiCall('https://dummyjso
     totalAmount = data1.total + data2.total
     console.log("Total amount of cart1 and cart2 is",totalAmount);
     })
+    
+
+    // calling api using fetch
+//     Read<tr> the countries API using fetch and print
+//<tr> the name of country, capital, languages
+// and population
+   let tbody=document.querySelector("tbody")
+    fetch('https://restcountries.com/v2/all')
+    .then((data) => { 
+    return data.json() })
+    .then((data) =>{
+    data.map((values)=>{
+        let datavalues=`<td>${values.name}</td>
+        <td>${values.capital}</td>
+        <td>${values.languages}</td>
+        <td>${values.population}</td>`
+        tbody.innerHTML=datavalues
+
+
+        // console.log(values.name);
+        // console.log(values.capital)
+        // console.log(values.languages) 
+        // console.log(values.population)
+    })
+    })
+
 
 
 
