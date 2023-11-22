@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+        }
+    
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 20px 0;
+        }
+    
+        th, td {
+          padding: 12px;
+          text-align: left;
+          border-bottom: 1px solid #ddd;
+        }
+    
+        th {
+          background-color: brown;
+        }
+    
+        tr:hover {
+          background-color: #f5f5f5;
+        }
+        .container{
+            margin: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        tbody{
+            background-color:  rgb(228, 192, 192); ;
+        }
+        /* #lang{
+    
+        } */
+      #officials{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10%;
+        flex-direction: column;
+      }
+        
+        </style>
+</head>
+<body>
+    <div id="buttons">
+        <button id="btn1">All countries</button>
+        <button id="btn2">Top 1o Largest Countries</button>
+        <button id="btn3"> Official Languages</button>
+    </div>
+    <div class="container">
+    <table class="table" style="width: 50%;">
+        <thead style="background-color: brown;">
+        <tr><th>Name</th>
+        <th>capital</th>
+        <th>languages</th>
+        <th>population</th>
+    </tr>
+</thead>
+ <tbody id="tablebody" >
+
+        </tbody>
+        
+    </table>
+    <table class="table2"  style="width: 40%; height: 50%;" >
+        <thead>
+        <tr><th>Name</th>
+        <th>Area</th> 
+    </tr>
+</thead>
+ <tbody id="largest">
+
+        </tbody>
+        
+    </table>
+</table>
+<div id=lang style="background-color: rgb(240, 197, 197);" >
+<h3>Total Number Of Languages as officials</h3>
+<ol id="officials">
+    
+</ol>
+<div class="total">
+
+</div>
+</div>
+</div>
+    <script>
+    function apiCall(url) {
+    let xhr = new XMLHttpRequest()
+    console.log(xhr)
+
+    xhr.responseType = 'json'
+    xhr.onprogress = function () {
+        console.log("loading...")
+    }
+
+    let promise = new Promise(function (resolve, reject) {
+        xhr.onload = function () {
+            resolve(xhr.response)
+        }
+        xhr.onerror = function () {
+            reject("err")
+        }
+    })
+   
+    xhr.open('GET', url)
+    xhr.send()
+
+    return promise
+
+}
+
+//  apiCall('https://dummyjson.com/carts/1')
+//    <tr>.then((data1) => { 
+//    let api1=data1.total
+//    console.log(api1);
+// })
+// apiCall('https://dummyjson.com/carts/2')
+//    <tr>.then((data2) => {  
+//     let api2 = data2.total
+//     console.log(api2);
+    
+    
+// })
+
+
+
+//Now make sequential API calls. Use<tr> the
+//response of<tr> the first promise and return<tr> the
+//total amount to<tr> the next.
+let totalAmount;
+Promise.all([apiCall('https://dummyjson.com/carts/1'), apiCall('https://dummyjson.com/carts/2')])
+
+    .then(([data1, data2])=>{
+    console.log(data1);
+    console.log(data2);
+    console.log("total amount of cart1",data1.total);
+    console.log("total amount of cart2",data2.total);
+    
+    totalAmount = data1.total + data2.total
+    console.log("Total amount of cart1 and cart2 is",totalAmount);
+    })
+    
+
+    // calling api using fetch
+//     Read<tr> the countries API using fetch and print
+//<tr> the name of country, capital, languages
+// and population
+   let tbody=document.querySelector("#tablebody")
+   //taking buttons
+   const button1=document.getElementById("btn1");
+   const button2=document.getElementById("btn2");
+   const button3=document.getElementById("btn3");
+//adding onlick event listeners
+button1.addEventListener("click",function(){
+    fetch('https://restcountries.com/v2/all')
+    .then((data) => { 
+    return data.json() })
+    .then((objdata) =>{
+        let datavalues=""
+    objdata.map((values)=>{
+        datavalues +=`<span><tr><td>${values.name}</td></span>
+            <span><td>${values.capital}</td></span>
+                <span><td>${values.languages.map((e)=>{
+            return e.name}).join(", ")}</td></span>
+            <span><td>${values.population}</td></tr></span>`
+        
+
+
+        // console.log(values.name);
+        // console.log(values.capital)
+        // console.log(values.languages) 
+        // console.log(values.population)
+    })
+    tbody.innerHTML=datavalues
+    })
+})
+
+    //top ten laargest countries according to area print their name and area using if else
+
+
+
+button2.addEventListener("click",function(){
+
+    fetch('https://restcountries.com/v2/all')
+    .then((data) => {
+        return data.json();})
+        .then((objdata) =>{
+            let datavalues=""
+            objdata.map((values)=>{
+             if(values.area>=2724900){
+                datavalues += `<span><tr><td>${values.name} </td></span>
+                    <span><td>${values.area} </td></tr></span>`
+                }
+                    })
+                
+                    document.getElementById("largest").innerHTML=datavalues;
+    
+                    })
+                })
+
+                    /*read the
+countries api and count total number of
+languages in the world used as officials and
+display them. in orderlist write same language once*/
+
+
+button3.addEventListener("click",function(){
+
+fetch('https://restcountries.com/v2/all')
+.then((data) => {return data.json()})
+.then((objdata) =>{
+    let datalang =""
+    let langcount=0
+    objdata.map((values)=>{
+        if(values.languages.length>0){
+            values.languages.map((e)=>{
+                if(datalang.includes(e.name)){
+                   
+                }
+                else{
+                langcount++
+                datalang += `<span><li>${e.name} </li></span>`
+                }
+                })
+                }
+                })
+                document.getElementById("officials").innerHTML=datalang;
+                document.querySelector(".total").innerHTML=`Total Official Languages: ${langcount}`;
+                })
+
+            })
+
+
+
+                
+
+   
+
+
+
+
+
+
+
+
+        
+      
+     
+
+    
+    </script>
+</body>
+</html>
